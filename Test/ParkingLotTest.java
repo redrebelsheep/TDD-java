@@ -1,42 +1,62 @@
+import javafx.scene.paint.Color;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class ParkingLotTest {
+public class ParkingLotTest {
 
     ParkingLot codeUnderTest;
 
-    @BeforeEach
-    void init(){
-        codeUnderTest = new ParkingLot();
-    }
-
     @Test
-    void parkingLotGetSize(){
-        // Give
+    void parkingLotGetSizeTest(){
+        //GIVEN
+        codeUnderTest = new ParkingLot(6);
         int expected = 6;
-        codeUnderTest.setSize(6);
-        // When
-
+        //WHEN
         int actual = codeUnderTest.getSize();
-
-        assertEquals(expected, actual);
-
+        //THEN
+        Assertions.assertEquals(expected,actual);
     }
 
     @Test
-    void parkingLotGetFee(){
-        // Give
-        int expected = 6;
+    void parkingLotGetFeeTest(){
+        //GIVEN
+        codeUnderTest = new ParkingLot(6);
+        int expected = 9;
         int hours = 3;
-        codeUnderTest.setSize(6);
-        // When
-
-
+        //WHEN
         int actual = codeUnderTest.getFee(3);
-
-        assertEquals(expected, actual);
-
+        //THEN
+        Assertions.assertEquals(expected,actual);
     }
+
+    @Test
+    void parkingLotGetDailyFeeTest(){
+        //GIVEN
+        codeUnderTest = new ParkingLot(6);
+        int expected = 15;
+        int hours = 6;
+        //WHEN
+        int actual = codeUnderTest.getFee(6);
+        //THEN
+        Assertions.assertEquals(expected,actual);
+    }
+
+    @Test
+    void parkingLot(){
+        //GIVEN
+        codeUnderTest = new ParkingLot(6);
+        String licenzPlateNumber = "123456";
+        Color carColor = Color.WHITESMOKE;
+        //WHEN
+        Ticket actual = codeUnderTest.createTicket(licenzPlateNumber,carColor);
+        //THEN
+        Assertions.assertEquals(licenzPlateNumber,actual.getLicenzPlateNumber());
+        Assertions.assertEquals(carColor,actual.getCarColor());
+    }
+
+
+
+
+
 }
