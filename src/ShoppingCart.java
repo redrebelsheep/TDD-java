@@ -1,53 +1,47 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ShoppingCart {
 
-    private ArrayList<LineItem> cart = new ArrayList<LineItem>();
+    private final List<LineItem> cart = new ArrayList<>();
     private int totalPrice = 0;
-    private int totalQuantity = 0;
+    private int quantity = 0;
 
-    public void addItem(LineItem item){
-        totalPrice += item.getPrice();
-        totalQuantity += item.getQuantity();
+
+    public void addItem(LineItem item) {
+        totalPrice += item.getPrice() * item.getQuantity();
+        quantity += item.getQuantity();
         cart.add(item);
     }
 
-    public ArrayList<LineItem> getCart() {
+    public List<LineItem> getCart() {
         return cart;
-    }
-
-
-    public int getTotalQuantity() {
-        return totalQuantity;
     }
 
     public int getTotalPrice() {
         return totalPrice;
     }
 
-    public ArrayList<Integer> itemQuantities() {
-        ArrayList<LineItem> tmpList = new ArrayList<LineItem>();
-        for(LineItem lineItem : cart){
-           if(tmpList.stream().anyMatch(e -> e.getName().equals(lineItem.getName()))){
-               int index = tmpList.indexOf(lineItem);
-               tmpList.get(index).addQuantity(lineItem.getQuantity());
-            }else {
-               tmpList.add(lineItem);
-           }
-        }
-
-        return (ArrayList<Integer>) tmpList.stream().map(e -> e.getQuantity()).collect(Collectors.toList());
+    public int getQuantity() {
+        return quantity;
     }
 
 
-    public ArrayList<LineItem> onSaleItems() {
-        ArrayList<LineItem> tmpList = new ArrayList<LineItem>();
-        for(LineItem lineItem : cart){
-            if(lineItem.isOnSale()){
-                tmpList.add(lineItem);
+    public List<LineItem> itemizedList() {
+        List<LineItem> result = new ArrayList<>();
+        for(LineItem item : cart){
+            if(result.contains(item)){
+                result.get(result.indexOf(item)).setQuantity(result.get(result.indexOf(item)).getQuantity() + item.getQuantity());
+            }else{
+                result.add(item);
             }
         }
-        return tmpList;
+        return result;
+    }
+
+
+    public List<LineItem> oneSalesItem() {
+        return cart.stream().filter(LineItem::isOneSale).collect(Collectors.toList());
     }
 }

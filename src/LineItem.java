@@ -1,37 +1,13 @@
-public class LineItem {
+public class LineItem{
 
     private int price;
     private int quantity;
-    private boolean onSale;
-    private String name;
+    private boolean isOneSale;
 
-    public LineItem(int price, int quantity, boolean onSale, String name) {
+    public LineItem(int price,int quantity,boolean isOneSale) {
         this.price = price;
         this.quantity = quantity;
-        this.onSale = onSale;
-        this.name = name;
-    }
-
-
-
-    public boolean isOnSale() {
-        return onSale;
-    }
-
-    public LineItem(int price, String name) {
-        this.price = price;
-        this.name = name;
-        this.quantity = 1;
-        this.onSale = false;
-
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void addQuantity(int quantity) {
-        this.quantity += quantity;
+        this.isOneSale = isOneSale;
     }
 
     public int getPrice() {
@@ -42,4 +18,11 @@ public class LineItem {
         return quantity;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public boolean isOneSale() {
+        return isOneSale;
+    }
 }
