@@ -7,5 +7,6 @@ public class FizzBuzz {
         output += input % 5 == 0 ? "Buzz" : "";
         return output.isEmpty() ? String.valueOf(input) : output;
     }
+
 }
 

@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -5,21 +6,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class StringCalculatorTest {
 
 
+//    @Test
+//    @DisplayName("StringCalculatorTest 1 Input Null Return zero")
+//    public void testStringCalculator_returnZeroWithNullInput() {
+//        // GIVEN
+//        String input = null;
+//
+//        // WHEN
+//        int output = StringCalculator.add(input);
+//
+//        // THEN
+//        int expected = 0;
+//        assertEquals(expected, output);
+//    }
 
     @Test
-    public void testStringCalculator_returnZeroWithNullInput() {
-        // GIVEN
-        String input = null;
-
-        // WHEN
-        int output = StringCalculator.add(input);
-
-        // THEN
-        int expected = 0;
-        assertEquals(expected, output);
-    }
-
-    @Test
+    @DisplayName("StringCalculatorTest 1 Return zero")
     public void testStringCalculator_returnZeroWithEmptyInput() {
         // GIVEN
         String input = "";
@@ -33,6 +35,7 @@ class StringCalculatorTest {
     }
 
     @Test
+    @DisplayName("StringCalculatorTest 2 Return a number (1)")
     public void testStringCalculator_returnSingleNumber() {
         // GIVEN
         String input = "1";
@@ -46,6 +49,7 @@ class StringCalculatorTest {
     }
 
     @Test
+    @DisplayName("StrubgCalculatorTest 3 Return multiNumbers")
     public void testStringCalculator_returnMultipleNumbers() {
         // GIVEN
         String input = "1,2,100,1000";
@@ -54,11 +58,12 @@ class StringCalculatorTest {
         int output = StringCalculator.add(input);
 
         // THEN
-        int expected = 1103;
+        int expected = 103;
         assertEquals(expected, output);
     }
-
+//
     @Test
+    @DisplayName("StrubgCalculatorTest 4 Return multiNumbers with Linebreack")
     public void testStringCalculator_returnMultipleNumbersWithSupportForLinebreakAndComma() {
         // GIVEN
         String input = "1,2,100\n1000";
@@ -67,11 +72,12 @@ class StringCalculatorTest {
         int output = StringCalculator.add(input);
 
         // THEN
-        int expected = 1103;
+        int expected = 103;
         assertEquals(expected, output);
     }
 
     @Test
+    @DisplayName("StrubgCalculatorTest 5 Return multiNumbers with new Trenner")
     public void testStringCalculator_returnMultipleNumbersWithCustomDelimiter() {
         // GIVEN
         String input = "//;\n1;2";
@@ -83,46 +89,51 @@ class StringCalculatorTest {
         int expected = 3;
         assertEquals(expected, output);
     }
-
+//
+//    @Test
+//    public void testStringCalculator_returnMultipleNumbersWithCustomDelimiterAndManySetup() {
+//        // GIVEN
+//        String[] inputs = {
+//                "//;\n1;2",
+//                "//\n\n2\n2",
+//                "//n\n1n1n1",
+//                "//---\n5---5"
+//        };
+//        int[] expected = {
+//                3,
+//                4,
+//                3,
+//                10
+//        };
+//
+//        // WHEN
+//        int[] outputs = new int[inputs.length];
+//        for(int i = 0; i < inputs.length; i++) {
+//            outputs[i] = StringCalculator.add(inputs[i]);
+//        }
+//
+//        // THEN
+//        assertArrayEquals(expected, outputs);
+//    }
+//
     @Test
-    public void testStringCalculator_returnMultipleNumbersWithCustomDelimiterAndManySetup() {
-        // GIVEN
-        String[] inputs = {
-                "//;\n1;2",
-                "//\n\n2\n2",
-                "//n\n1n1n1",
-                "//---\n5---5"
-        };
-        int[] expected = {
-                3,
-                4,
-                3,
-                10
-        };
-
-        // WHEN
-        int[] outputs = new int[inputs.length];
-        for(int i = 0; i < inputs.length; i++) {
-            outputs[i] = StringCalculator.add(inputs[i]);
-        }
-
-        // THEN
-        assertArrayEquals(expected, outputs);
-    }
-
-    @Test
+    @DisplayName("StrubgCalculatorTest 6 Return Expetion if negativ")
     public void testStringCalculator_negativesThrowExceptionsContainingAllNegatives() {
         // GIVEN
-        String input = "-1,-2";
+        String input = "-1,2";
+        String expected = "negatives not allowed -1";
 
         // WHEN
 
         // THEN
-        Throwable exception = assertThrows(Exception.class, () -> StringCalculator.add(input));
-        assertEquals(exception.getMessage(), "negatives not allowed: -1, -2");
-    }
+        Throwable exception = assertThrows(Exception.class, () -> StringCalculator.add(input),
+                "Line was expected (negatives not allowed) ");
+        assertEquals(expected, exception.getMessage());
 
+    }
+//
     @Test
+    @DisplayName("StrubgCalculatorTest 7 Ignores Numbers bigger then 1000")
     public void testStringCalculator_ignoresNumbersBiggerThanOnethousand() {
         // GIVEN
         String input = "2,1001";
@@ -132,6 +143,22 @@ class StringCalculatorTest {
 
         // THEN
         int expected = 2;
+        assertEquals(expected, output);
+    }
+//
+
+    @Test
+    @DisplayName("StrubgCalculatorTest 8 Ignores Numbers long Deli")
+    public void testStringCalculator_longDeli() {
+        // GIVEN
+        String input = "//[xxx]\n1xxx2xxx3";
+        // [ .... ] [ .... ] \n
+
+        // WHEN
+        int output = StringCalculator.add(input);
+
+        // THEN
+        int expected = 6;
         assertEquals(expected, output);
     }
 

@@ -1,39 +1,34 @@
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class StringCalculator {
 
-    private final static String CUSTOM_DELIMITER_HEADER = "//";
-
     public static int add(String numbers) {
-        if (numbers == null || numbers.isEmpty()) {
+        StringBuilder negativeException = new StringBuilder("negatives not allowed");
+        if (numbers.isEmpty()) {
             return 0;
         }
-
-        final boolean HAS_CUSTOM_DELIMITER = numbers.startsWith(CUSTOM_DELIMITER_HEADER);
-        String delimiter = "[,\n]";
-
-        if (HAS_CUSTOM_DELIMITER) {
-            int lineBreakIndex = numbers.indexOf('\n', CUSTOM_DELIMITER_HEADER.length() + 1);
-            delimiter = numbers.substring(CUSTOM_DELIMITER_HEADER.length(), lineBreakIndex);
-            numbers = numbers.substring(lineBreakIndex + 1);
+        String delimeter = ",";
+        if (numbers.startsWith("//")) {
+            String[] deliArray = numbers.split("\n");
+            if(!deliArray[0].contains("[")){
+                deliArray[1] = deliArray[1].replace(deliArray[0].replace("//",""),",");
+            }
+            while(deliArray[0].contains("[")){
+                String str = deliArray[0].substring(deliArray[0].indexOf("[")+1,deliArray[0].indexOf("]"));
+                deliArray[0] = deliArray[0].replace(str,",");
+                deliArray[0] = deliArray[0].substring(deliArray[0].indexOf("]")+1);
+                deliArray[1] = deliArray[1].replace(str,",");
+            }
+            numbers = deliArray[1];
         }
-
-
-        if (Arrays.stream(numbers.split(delimiter)).anyMatch(num -> num.startsWith("-"))) {
-            List<String> invalidNumbers = Arrays.stream(numbers.split(delimiter))
-                    .filter(num -> num.startsWith("-"))
-                    .collect(Collectors.toList());
-            String errorMessage = "negatives not allowed: " + String.join(", ", invalidNumbers);
-            throw new RuntimeException(errorMessage);
+        int[] numArray = Arrays.stream(numbers.replace("\n", delimeter).split(delimeter)).mapToInt(Integer::parseInt).filter(num -> num < 1000).toArray();
+        int[] negativeArray = Arrays.stream(numArray).filter(num -> num < 0).toArray();
+        if (negativeArray.length > 0) {
+            for (int negativeNum : negativeArray) {
+                negativeException.append(" ").append(negativeNum);
+            }
+            throw new RuntimeException(negativeException.toString());
         }
-
-        List<Integer> intNumberList = Arrays.stream(numbers.split(delimiter))
-                .map(Integer::parseInt)
-                .filter(n -> n <= 1000).collect(Collectors.toList());
-
-        return intNumberList.stream()
-                .reduce(0, Integer::sum);
+        return Arrays.stream(numArray).sum();
     }
 }
