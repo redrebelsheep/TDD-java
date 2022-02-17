@@ -89,33 +89,7 @@ class StringCalculatorTest {
         int expected = 3;
         assertEquals(expected, output);
     }
-//
-//    @Test
-//    public void testStringCalculator_returnMultipleNumbersWithCustomDelimiterAndManySetup() {
-//        // GIVEN
-//        String[] inputs = {
-//                "//;\n1;2",
-//                "//\n\n2\n2",
-//                "//n\n1n1n1",
-//                "//---\n5---5"
-//        };
-//        int[] expected = {
-//                3,
-//                4,
-//                3,
-//                10
-//        };
-//
-//        // WHEN
-//        int[] outputs = new int[inputs.length];
-//        for(int i = 0; i < inputs.length; i++) {
-//            outputs[i] = StringCalculator.add(inputs[i]);
-//        }
-//
-//        // THEN
-//        assertArrayEquals(expected, outputs);
-//    }
-//
+
     @Test
     @DisplayName("StrubgCalculatorTest 6 Return Expetion if negativ")
     public void testStringCalculator_negativesThrowExceptionsContainingAllNegatives() {
