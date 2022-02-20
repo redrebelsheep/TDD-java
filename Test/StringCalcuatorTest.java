@@ -102,7 +102,7 @@ class StringCalculatorTest {
         // THEN
         Throwable exception = assertThrows(Exception.class, () -> StringCalculator.add(input),
                 "Line was expected (negatives not allowed) ");
-        assertEquals(expected, exception.getMessage());
+        assertEquals(expected, exception.getMessage( ));
 
     }
 //
@@ -137,7 +137,7 @@ class StringCalculatorTest {
     }
 
     @Test
-    public void testStringCalculator_foooooooooooo() {
+    public void testStringCalculator_allChar() {
         // GIVEN
         String input = "//[+][x]\n1+2x3";
         // [ .... ] [ .... ] \n
@@ -149,4 +149,5 @@ class StringCalculatorTest {
         int expected = 6;
         assertEquals(expected, output);
     }
+
 }
